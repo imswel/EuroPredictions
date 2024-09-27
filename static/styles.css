@@ -9,7 +9,8 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: 600px;
+  width: 100%; /* Ajustement pour être responsive */
+  max-width: 600px; /* Maximum de 600px */
   margin: auto;
   background-color: white;
   border-radius: 16px;
@@ -96,4 +97,38 @@ button {
 button:hover {
   background-color: #001367;
   color: white;
+}
+
+/* Media Queries pour la réactivité */
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+    background-color: white;
+  }
+  .container {
+    box-shadow: none;
+    border-radius: 0px;
+  }
+  h1 {
+    font-size: 1.5em; /* Réduire la taille du titre sur mobile */
+  }
+  .number-ball {
+    width: 40px; /* Ajuster la taille des boules */
+    height: 40px;
+    font-size: 18px; /* Réduire la taille de la police */
+  }
+
+  .star {
+    width: 50px; /* Ajuster la taille des étoiles */
+    height: 50px;
+    background-size: 50px 50px;
+    font-size: 18px;
+  }
+
+  button {
+    margin: 0 24px;
+    width: calc(100% - 48px); /* Le bouton prend toute la largeur */
+    font-size: 14px; /* Réduire la taille de la police */
+    padding: 8px; /* Ajuster le padding */
+  }
 }

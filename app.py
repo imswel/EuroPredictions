@@ -4,13 +4,10 @@ from collections import Counter
 import requests
 from io import StringIO
 from flask import Flask, render_template, request
-import locale
-import os  # Importer le module os
+import os
+from bs4 import BeautifulSoup  # Assurez-vous d'importer BeautifulSoup
 
 app = Flask(__name__)
-
-# Configurer la locale pour le formatage
-# locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')  # Utilisez 'fr_FR.UTF-8' pour le format français
 
 # Télécharger et lire le fichier CSV des tirages Euromillions
 def fetch_data():
@@ -78,25 +75,34 @@ def draw_numbers_and_stars(weights_numbers, weights_stars):
 
 # Récupérer le montant du jackpot
 def get_jackpot():
-    url = "https://www.euro-millions.com/fr/"
-    response = requests.get(url)
-    jackpot_text = response.text.split('<div class="jackpot">')[1].split('</div>')[0]
+    url = "https://apim.prd.natlot.be/api/v4/draw-games/draws?next-draws=0&status=OPEN"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Origin": "https://www.loterie-nationale.be",
+        "Connection": "keep-alive",
+        "Referer": "https://www.loterie-nationale.be/",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "cross-site"
+    }
 
-    # Nettoyer le texte pour obtenir uniquement la valeur numérique
-    jackpot_value_str = jackpot_text.replace('millions', '').replace('&euro;', '').replace(' ', '').strip()
-
-    # Convertir en entier
-    try:
-        jackpot_value = int(jackpot_value_str) * 1_000_000
-    except ValueError:
-        jackpot_value = 0  # Valeur par défaut en cas d'erreur
-
-    # Formater le jackpot sans utiliser locale
-    formatted_jackpot = "{:,.0f} €".format(jackpot_value).replace(',', ' ').replace('.', ',')
+    response = requests.get(url, headers=headers)
     
-    return formatted_jackpot
-
-
+    if response.status_code == 200:
+        data = response.json()
+        for draw in data.get("draws", []):
+            if draw["gameName"] == "Euro Millions":
+                jackpot = draw["jackpots"][0]["amount"]
+                # Enlever les centimes
+                formatted_jackpot = int(jackpot / 100)
+                # Formater le jackpot pour qu'il soit lisible
+                return "{:,.0f} €".format(formatted_jackpot).replace(",", " ")
+    else:
+        print("Erreur lors de la récupération des données")
+        return "Erreur lors de la récupération des données"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

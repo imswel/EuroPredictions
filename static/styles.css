@@ -1,0 +1,99 @@
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 24px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 600px;
+  margin: auto;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.jackpot {
+  background-color: #001367;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  padding: 16px;
+  margin: 0;
+}
+
+.numbers-container,
+.stars-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.number-ball {
+  background-color: #001367; /* Couleur des boules */
+  color: white;
+  border-radius: 16px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.star {
+  background-image: url(img/star.svg);
+  background-repeat: no-repeat;
+  background-size: 60px 60px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.star > p {
+  padding: 0;
+  margin: 4px 0 0 0;
+  width: 100%;
+  text-align: center;
+}
+
+form {
+  display: block;
+  text-align: center;
+  margin-bottom: 24px;
+  margin-top: 16px;
+}
+
+button {
+  border: 2px solid #001367;
+  background: transparent;
+  color: #001367;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.5s;
+}
+
+button:hover {
+  background-color: #001367;
+  color: white;
+}

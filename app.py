@@ -9,7 +9,15 @@ import locale
 app = Flask(__name__)
 
 # Configurer la locale pour le formatage
-locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')  # Utilisez 'fr_FR.UTF-8' pour le format français
+try:
+    locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')  # Utilisez 'fr_FR.UTF-8' pour le format français
+except locale.Error:
+    # Fallback à une approche manuelle en cas d'erreur de locale
+    def format_number(number):
+        return f"{number:,}".replace(",", " ").replace(".", ",") + " €"
+else:
+    def format_number(number):
+        return locale.format_string("%d", number, grouping=True) + " €"
 
 # Télécharger et lire le fichier CSV des tirages Euromillions
 def fetch_data():
@@ -91,7 +99,7 @@ def get_jackpot():
         jackpot_value = 0  # Valeur par défaut en cas d'erreur
 
     # Formater le jackpot
-    formatted_jackpot = locale.format_string("%d", jackpot_value, grouping=True) + " €"
+    formatted_jackpot = format_number(jackpot_value)
     
     return formatted_jackpot
 

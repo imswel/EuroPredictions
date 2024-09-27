@@ -91,10 +91,11 @@ def get_jackpot():
     except ValueError:
         jackpot_value = 0  # Valeur par défaut en cas d'erreur
 
-    # Formater le jackpot
-    formatted_jackpot = locale.format_string("%d", jackpot_value, grouping=True) + " €"
+    # Formater le jackpot sans utiliser locale
+    formatted_jackpot = "{:,.0f} €".format(jackpot_value).replace(',', ' ').replace('.', ',')
     
     return formatted_jackpot
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

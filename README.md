@@ -1,8 +1,8 @@
-# EuroMillions Prediction App
+# EuroPredictions App
 
 ## Description
 
-EuroMillions Prediction App is a Flask-based web application that generates number predictions for the EuroMillions lottery. The predictions are weighted based on the frequency of previous winning numbers and stars. The app also displays the current jackpot amount retrieved from an external source.
+EuroPredictions App is a Flask-based web application that generates number predictions for the EuroMillions lottery. The predictions are weighted based on the frequency of previous winning numbers and stars. The app also displays the current jackpot amount retrieved from an external source.
 
 ## Features
 
@@ -107,11 +107,3 @@ EuroPredictions/
 ## Contributing
 
 Feel free to fork this repository and submit pull requests to suggest improvements or new features.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-```
-
-```

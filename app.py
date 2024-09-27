@@ -10,7 +10,7 @@ import os  # Importer le module os
 app = Flask(__name__)
 
 # Configurer la locale pour le formatage
-locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')  # Utilisez 'fr_FR.UTF-8' pour le format français
+# locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')  # Utilisez 'fr_FR.UTF-8' pour le format français
 
 # Télécharger et lire le fichier CSV des tirages Euromillions
 def fetch_data():
@@ -81,10 +81,10 @@ def get_jackpot():
     url = "https://www.euro-millions.com/fr/"
     response = requests.get(url)
     jackpot_text = response.text.split('<div class="jackpot">')[1].split('</div>')[0]
-    
+
     # Nettoyer le texte pour obtenir uniquement la valeur numérique
     jackpot_value_str = jackpot_text.replace('millions', '').replace('&euro;', '').replace(' ', '').strip()
-    
+
     # Convertir en entier
     try:
         jackpot_value = int(jackpot_value_str) * 1_000_000
@@ -95,6 +95,7 @@ def get_jackpot():
     formatted_jackpot = "{:,.0f} €".format(jackpot_value).replace(',', ' ').replace('.', ',')
     
     return formatted_jackpot
+
 
 
 @app.route('/', methods=['GET', 'POST'])
